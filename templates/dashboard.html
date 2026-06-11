@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+
+<h2>Welcome, {{user}}</h2>
+
+<div class="card">
+    <h3>Resume Analyser</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+        <textarea name="resume" placeholder="Past your resume(optional)"></textarea>
+        <p>Or Upload file</p>
+        <input type="file" name="file">
+        <input name="role" placeholder="what do you want to became? (e.g Backend Engineer)">
+        <button type="submit">Analyze Resume</button>
+    </form>
+</div>
+
+{% if result %}
+    <div class="red">
+        {% if result.get("error") %}
+        <p style="color: red;"> Error: {{result.error}}</p>
+        {% endif %}
+
+        <h3>Skills</h3>
+        <ul>
+            {% for s in result.get("skills", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+
+        <h3>Missing Skills</h3>
+        <ul>
+            {% for s in result.get("missing_skills", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Roadmap</h3>
+        <ul>
+            {% for s in result.get("roadmap", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>ATS Score</h3>
+        <p>{{ result.get("ats_score", 0) }}/100</p>
+
+
+        <h3>Resume Suggestions</h3>
+        <ul>
+        {% for s in result.get("resume_suggestions", []) %}
+            <li>{{ s }}</li>
+        {% endfor %}
+        </ul>
+
+        <h3>Interview Questions List</h3>
+        <ul>
+            {% for s in result.get("interview_questions", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} AI Career Copilot {% endblock %}</title>
+    <link rel ="stylesheet" href="{{ url_for('static', filename = 'style.css')}}">
+</head>
+<body> 
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/history">History</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <main class="container">
+        {% block content %} {% endblock %}
+    </main>
+    <footer>
+        <p>@2026 AI CAREER COPILOT</p>
+    </footer>
+</body>
+</html>
